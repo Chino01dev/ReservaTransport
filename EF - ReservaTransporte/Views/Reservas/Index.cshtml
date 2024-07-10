@@ -1,0 +1,106 @@
+﻿@model IEnumerable<EF___ReservaTransporte.Models.Reserva>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaHora)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UbicacionOrigen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UbicacionDestino)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Confirmada)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Conductor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehiculo)
+            </th>
+            <th>
+                <label>Tipo de Transporte</label>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaHora)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UbicacionOrigen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UbicacionDestino)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Confirmada)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Conductor.ConductorId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vehiculo.VehiculoId)
+            </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.TransportType)
+             </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ReservaId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ReservaId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ReservaId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Reserva Creada</h5>
+                <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>-->
+            </div>
+            <div class="modal-body">
+                @TempData["SuccessMessage"]
+            </div>
+            <div class="modal-footer">
+                <!--<button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var successMessage = '@TempData["SuccessMessage"]';
+            if (successMessage) {
+                $('#successModal').modal('show');
+            }
+        });
+    </script>
+}
